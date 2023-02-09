@@ -1,31 +1,32 @@
 <template>
   <header class="header">
     <label for="">
-      Escreva o nome do pokémon ou seu id
+      Escreva o nome do pokémon ou seu N°
       <input 
         type="text" 
         v-model="pokemonID">
       <button 
         class="searchButton"
-        @click="searchPokemon">Busca tu pokemon</button>
+        @click="searchPokemon">Procure seu Pokémon</button>
     </label>
   </header>
   
   <main 
-    class="main"
+    class="principal"
+    v-if="Object.entries(pokemonData).length >0"
     
     >
     <section class="pokemonCard">
       <div class="nameImage">
         <h1 class="pokemonName">{{pokemonData.name}}</h1>
         <img 
-        :src="pokemonData.sprites" 
+        :src="pokemonData.sprites.front_default" 
         :alt="pokemonData.name"
         >
 
       </div>
       <ul class="type">
-      <h2>Type</h2>
+      <h2>Cara</h2>
         <li
           v-for="(type, index) in pokemonData.types"
           :key="index"
@@ -35,12 +36,22 @@
         </li>
       </ul>
       <ul class="stats">
-        <h2>stats</h2>
+        <h2>Estatísticas</h2>
         <li
           v-for="(stat, index) in pokemonData.stats"
           :key="index"
         >
           <span>{{stat.stat.name}} => {{stat.base_stat}}</span>
+        </li>
+      </ul>
+
+      <ul class="evo">
+        <h2>Evoluções</h2>
+        <li
+        v-for="(moves, index) in pokemonData.moves"
+        :key="index"
+        >
+          <span>{{moves.move.name}}</span>
         </li>
       </ul>
     </section>
@@ -86,13 +97,13 @@
   
   
 @import url('https://fonts.googleapis.com/css2?family=Changa:wght@400;700&display=swap');
-.header, .main, input[type="text"], .searchButton {
+.header, .principal, input[type="text"], .searchButton {
   font-family: 'Changa', sans-serif;
 }
 .header, input[type="text"], .searchButton {
   font-size: 1.5rem;
 }
-.main {
+.principal {
   font-size: 1.2rem;
   background-color: $pokedex-green;
 }
@@ -106,7 +117,6 @@
   & .searchButton {
   background-color: #1cb02b;
   color: white;
-  border: none;
   margin-left: 10px;
   border-radius: 10px;
   cursor: pointer;
@@ -125,7 +135,7 @@
   flex-direction: row;
   justify-content: space-around;
   align-content: center;
-  & .nameImage, & .type, & .stats {
+  & .nameImage, & .type, & .stats, & .evo {
     width: 33%;
     display: flex;
     flex-direction: column;
@@ -146,7 +156,7 @@
     width: 90%;
     margin-bottom: 10px;
     text-align: center;
-    border-radius: 20px;
+    
   }
   & .stats li {
     align-self: flex-start;
@@ -168,6 +178,16 @@ ul {
     list-style: none;
     text-transform: uppercase;
   }
+
+ .evo{
+  color: black;
+  
+  & li {
+    
+    color: white;
+    text-transform: uppercase;
+  }
+ } 
 }
 .normal {
   background-color: $normal
