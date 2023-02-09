@@ -1,7 +1,7 @@
 <template>
   <header class="header">
     <label for="">
-      escreva o nome do pokémon ou seu id
+      Escreva o nome do pokémon ou seu id
       <input 
         type="text" 
         v-model="pokemonID">
@@ -84,7 +84,7 @@
   
   @import './tiposPokemon.scss';
   
-  @import './pokemon_types.scss';
+  
 @import url('https://fonts.googleapis.com/css2?family=Changa:wght@400;700&display=swap');
 .header, .main, input[type="text"], .searchButton {
   font-family: 'Changa', sans-serif;
