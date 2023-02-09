@@ -1,26 +1,47 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <header class="header">
+    <label for="">
+      escreva o nome do pokémon ou seu id
+      <input type="text" name="" id="">
+      <button>Busca tu pokemon</button>
+    </label>
+  </header>
+  
+  <main>
+    <section class="pokemonCard">
+      <div class="nameImage">
+        <h1 class="pokemonName">pikachu</h1>
+        <img src="" alt="pikachu">
+
+      </div>
+      <ul class="type">
+      <h2>Type</h2>
+        <li>
+          <span>Electric</span>
+        </li>
+      </ul>
+      <ul class="stats">
+        <h2>stats</h2>
+        <li>
+          <span></span>
+        </li>
+      </ul>
+    </section>
+  </main>
+  
 </template>
 
-<script>
-import HelloWorld from './components/HelloWorld.vue'
 
-export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-}
+<script>
+</script>
+
+<script>
+
+
+
+
 </script>
 
 <style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+
 </style>
