@@ -33,6 +33,31 @@
 
 
 <script>
+  import {pokeapi} from "@/api/pokeapi";
+  export default{
+    name :'App',
+    
+    data(){
+      return{
+        pokemonData:{},
+        pokemonID:'',
+      }
+    },
+    methods: {
+      async searchPokemon() {
+        try {
+          const pokemonABuscar = await fetch (`${pokeapi}/${this.pokemonID}`)
+          const pokemon = await pokemonABuscar.json()
+          this.pokemonData = pokemon
+          console.log(pokemon)
+          return pokemon
+        } catch (error){
+          alert('pokemon no encontrado')
+
+        }
+      }
+    }
+  }
 </script>
 
 <script>
