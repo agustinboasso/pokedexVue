@@ -13,7 +13,7 @@
   
   <main 
     class="principal"
-    v-if="Object.entries(pokemonData).length >0"
+    v-if="Object.entries(pokemonData).length > 0"
     
     >
     <section class="pokemonCard">
@@ -45,15 +45,10 @@
         </li>
       </ul>
 
-      <ul class="evo">
-        <h2>Evoluções</h2>
-        <li
-        v-for="(moves, index) in pokemonData.moves"
-        :key="index"
-        >
-          <span>{{moves.move.name}}</span>
-        </li>
-      </ul>
+      
+    </section>
+    <section>
+      <h2>EVOS</h2>
     </section>
   </main>
   
@@ -61,7 +56,7 @@
 
 
 <script>
-  import {pokeapi} from "@/api/pokeapi";
+ import {pokeapi} from "@/api/pokeapi";
   
   export default {
     name :'App',
@@ -69,6 +64,7 @@
     data() {
       return {
         pokemonData: {},
+        pokemonEvo: {},
         pokemonID: '',
       }
     },
@@ -76,15 +72,40 @@
       async searchPokemon() {
         try {
           const pokemonToFind= await fetch (`${pokeapi}/${this.pokemonID}`)
-          const pokemon = await pokemonToFind.json()
+          const pokemon = await pokemonToFind.json()          
           this.pokemonData = pokemon
           console.log(pokemon)
+          this.searchSpecies()
           return pokemon
         } catch (error){
           alert('pokemon no encontrado')
+        }
+      },
+      async searchSpecies(){
+        try{ 
+          const pokeSpecToFind= await fetch (this.pokemonData.species.url)
+          const esp = await pokeSpecToFind.json()
+          this.pokeSpecToFind = esp
+          console.log(esp)
+          this.searchEvolutions()
+          return esp
+        }catch(error){
+          console.log('Pokemon sin especie')
+        }
+      },
 
+      async searchEvolutions(){
+        try{ 
+          const pokeEvoToFind= await fetch (`${this.pokeSpecToFind.evolution_chain.url}`)
+          const evo = await pokeEvoToFind.json()
+          this.pokeEvoToFind = evo
+          console.log(evo)
+          return evo
+        }catch(error){
+          console.log('Pokemon sin evolución')
         }
       }
+      
     }
   }
 </script>
@@ -98,7 +119,7 @@
   
 @import url('https://fonts.googleapis.com/css2?family=Changa:wght@400;700&display=swap');
 .header, .principal, input[type="text"], .searchButton {
-  font-family: 'Changa', sans-serif;
+  font-family: 'Arial', sans-serif;
 }
 .header, input[type="text"], .searchButton {
   font-size: 1.5rem;
@@ -114,6 +135,8 @@
   height: 100px;
   background-color: $pokedex-red;
   color: white;
+  border: solid;
+  border-color: black;
   & .searchButton {
   background-color: #1cb02b;
   color: white;
@@ -127,7 +150,8 @@
   & input[type="text"] {
     border-radius: 10px;
     outline: none;
-    border: none;
+    border: solid;
+    border-color: black;
   }
 }
 .pokemonCard {
@@ -135,6 +159,9 @@
   flex-direction: row;
   justify-content: space-around;
   align-content: center;
+  border: solid;
+  border-color: black;
+  margin-top: 10px;
   & .nameImage, & .type, & .stats, & .evo {
     width: 33%;
     display: flex;
@@ -181,7 +208,7 @@ ul {
 
  .evo{
   color: black;
-  
+  list-style: none;
   & li {
     
     color: white;
