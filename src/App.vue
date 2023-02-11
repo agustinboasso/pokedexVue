@@ -44,11 +44,29 @@
           <span>{{stat.stat.name}} => {{stat.base_stat}}</span>
         </li>
       </ul>
+      
 
       
     </section>
-    <section>
-      <h2>EVOS</h2>
+    <section class="pokemonCard">
+      <h2>Evoluções:</h2>
+        <ul>
+          <li>
+            Species:
+            <br> 
+            {{ pokeSpecToFind.name }}
+    
+          </li>
+          <li>
+        Evolution Chain: 
+        <br>
+        <div v-for="(evolution, index) in pokeEvoToFind.chain.evolves_to" :key="index">
+          {{evolution.species.name}}
+          <br>
+          
+        </div>
+      </li>
+        </ul>
     </section>
   </main>
   
@@ -66,6 +84,8 @@
         pokemonData: {},
         pokemonEvo: {},
         pokemonID: '',
+        pokeSpecToFind: {},
+        pokeEvoToFind: {},
       }
     },
     methods: {
@@ -81,33 +101,36 @@
           alert('pokemon no encontrado')
         }
       },
-      async searchSpecies(){
-        try{ 
-          const pokeSpecToFind= await fetch (this.pokemonData.species.url)
-          const esp = await pokeSpecToFind.json()
-          this.pokeSpecToFind = esp
-          console.log(esp)
-          this.searchEvolutions()
-          return esp
-        }catch(error){
-          console.log('Pokemon sin especie')
-        }
-      },
-
-      async searchEvolutions(){
-        try{ 
-          const pokeEvoToFind= await fetch (`${this.pokeSpecToFind.evolution_chain.url}`)
-          const evo = await pokeEvoToFind.json()
-          this.pokeEvoToFind = evo
-          console.log(evo)
-          return evo
-        }catch(error){
-          console.log('Pokemon sin evolución')
-        }
+      async searchSpecies() {
+      try {
+        const pokeSpecToFind = await fetch(this.pokemonData.species.url);
+        const esp = await pokeSpecToFind.json();
+        this.pokeSpecToFind = esp;
+        console.log(esp);
+        this.searchEvolutions();
+        return esp;
+      } catch (error) {
+        console.log("Pokemon sin especie");
       }
-      
+    },
+
+    async searchEvolutions() {
+      try {
+        const pokeEvoToFind = await fetch(`${this.pokeSpecToFind.evolution_chain.url}`);
+        const evo = await pokeEvoToFind.json();
+        this.pokeEvoToFind = evo;
+        console.log(evo);
+        return evo;
+      } catch (error) {
+        console.log("Pokemon sin evolución");
+      }
     }
+  },
+  mounted() {
+    this.searchSpecies();
   }
+    }
+  
 </script>
 
 
