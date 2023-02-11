@@ -58,7 +58,7 @@
     
           </li>
           <li>
-        Evolution Chain: 
+        Cadeia Evolutiva: 
         <br>
         <div v-for="(evolution, index) in pokeEvoToFind.chain.evolves_to" :key="index">
           {{evolution.species.name}}
